@@ -10,14 +10,14 @@ void main() {
 
 bool isValid(String s) {
   List<String> tmp = [];
-  if (s.length % 2 == 1) {
+  if (s.length % 2 == 1 || s.isEmpty) {
     return false;
   }
   for (var i = 0; i < s.length; i++) {
     if (s[i].contains('{') || s[i].contains('(') || s[i].contains('[')) {
       //if opening add to list
       tmp.add(s[i]);
-    } else {
+    } else if (tmp.isNotEmpty) {
       switch (s[i]) {
         case '}':
           if (tmp.last == '{') {
@@ -43,10 +43,10 @@ bool isValid(String s) {
         default:
           return false;
       }
+    } else {
+      return false;
     }
   }
-  if (tmp.length > 0) {
-    return false;
-  }
-  return true;
+
+  return tmp.isEmpty ? true : false;
 }
